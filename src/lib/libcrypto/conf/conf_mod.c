@@ -545,8 +545,12 @@ CONF_get1_default_config_file(void)
 {
 	char *file = NULL;
 
+#ifndef X509_CONF_FILE
 	if (asprintf(&file, "%s/openssl.cnf",
 	    X509_get_default_cert_area()) == -1)
+#else
+	if (asprintf(&file, X509_CONF_FILE) == -1)
+#endif
 		return (NULL);
 	return file;
 }

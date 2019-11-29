@@ -1213,7 +1213,11 @@ make_config_name()
 	const char *t = X509_get_default_cert_area();
 	char *p;
 
+#ifndef X509_CONF_FILE
 	if (asprintf(&p, "%s/openssl.cnf", t) == -1)
+#else
+	if (asprintf(&p, X509_CONF_FILE) == -1)
+#endif
 		return NULL;
 	return p;
 }
